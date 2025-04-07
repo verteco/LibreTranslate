@@ -1,0 +1,18 @@
+name: libretranslate
+region: fra
+services:
+  - name: libretranslate-app
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: verteco/LibreTranslate
+    build_command: ./venv/bin/python scripts/compile_locales.py
+    dockerfile_path: docker/Dockerfile.do
+    http_port: 5000
+    instance_count: 1
+    instance_size_slug: basic-xs
+    routes:
+      - path: /
+    envs:
+      - key: LT_API_KEYS
+        value: "true"
