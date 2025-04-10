@@ -8,6 +8,11 @@ import argparse
 from libretranslate.init import check_and_install_models
 
 if __name__ == "__main__":
+    # Check if model installation should be skipped (for DigitalOcean deployments)
+    if os.environ.get('LT_SKIP_INSTALL_MODELS', '').lower() == 'true':
+        print("Skipping model installation as LT_SKIP_INSTALL_MODELS is set to true")
+        sys.exit(0)
+        
     parser = argparse.ArgumentParser()
     parser.add_argument("--load_only_lang_codes", type=str, default="")
     parser.add_argument("--update", action='store_true')
