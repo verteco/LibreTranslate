@@ -23,13 +23,17 @@ RUN addgroup --system --gid 1032 libretranslate && \
     chown -R libretranslate:libretranslate /home/libretranslate/.local
 
 # Copy application files (with special handling for scripts directory)
-COPY --chown=libretranslate:libretranslate libretranslate /app/libretranslate
-COPY --chown=libretranslate:libretranslate *.py pyproject.toml babel.cfg VERSION /app/
-COPY --chown=libretranslate:libretranslate entrypoint.sh /app/
+COPY libretranslate /app/libretranslate
+COPY *.py pyproject.toml babel.cfg VERSION /app/
 
 # Create and set up scripts directory - IMPORTANT: We'll use our dummy install_models.py
 RUN mkdir -p /app/scripts
-COPY --chown=libretranslate:libretranslate scripts/install_models.py /app/scripts/
+COPY scripts/install_models.py /app/scripts/
+
+# Copy entrypoint script and make it executable (MUST do this before switching users)
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh && \
+    chown -R libretranslate:libretranslate /app/
 
 # Set up virtual environment
 RUN python -m venv venv && \
@@ -38,10 +42,8 @@ RUN python -m venv venv && \
     venv/bin/pip install --no-cache-dir torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu && \
     venv/bin/pip install --no-cache-dir "numpy<2" && \
     venv/bin/pip install --no-cache-dir -e . && \
-    venv/bin/pip cache purge
-
-# Make entrypoint executable
-RUN chmod +x /app/entrypoint.sh
+    venv/bin/pip cache purge && \
+    chown -R libretranslate:libretranslate /app/venv
 
 # Switch to non-root user
 USER libretranslate
