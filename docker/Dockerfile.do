@@ -15,9 +15,9 @@ COPY . .
 
 # Install package from source code, compile translations
 RUN ./venv/bin/pip install Babel==2.12.1 && ./venv/bin/python scripts/compile_locales.py \
-  && ./venv/bin/pip install torch==2.0.1 --extra-index-url https://download.pytorch.org/whl/cpu \
+  && ./venv/bin/pip install torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu \
   && ./venv/bin/pip install "numpy<2" \
-  && ./venv/bin/pip install . \
+  && ./venv/bin/pip install --no-cache-dir . \
   && ./venv/bin/pip cache purge
 
 FROM python:3.11.11-slim-bullseye
