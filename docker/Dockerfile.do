@@ -2,6 +2,11 @@ FROM python:3.11.11-slim-bullseye AS builder
 
 WORKDIR /app
 
+# Set environment variables to disable CUDA
+ENV CUDA_VISIBLE_DEVICES=""
+ENV NO_CUDA=1
+ENV FORCE_CPU=1
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq \
   && apt-get -qqq install --no-install-recommends -y pkg-config gcc g++ \
@@ -13,14 +18,22 @@ RUN python -mvenv venv && ./venv/bin/pip install --no-cache-dir --upgrade pip
 
 COPY . .
 
-# Install package from source code, compile translations
+# Modify pyproject.toml to ensure CPU-only PyTorch
+RUN sed -i 's/torch ==2.2.0/torch==2.0.1+cpu/g' pyproject.toml
+
+# Pin PyTorch to explicitly use CPU version
 RUN ./venv/bin/pip install Babel==2.12.1 && ./venv/bin/python scripts/compile_locales.py \
-  && ./venv/bin/pip install torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu \
-  && ./venv/bin/pip install "numpy<2" \
-  && ./venv/bin/pip install --no-cache-dir . \
+  && ./venv/bin/pip install --no-cache-dir torch==2.0.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu \
+  && ./venv/bin/pip install --no-cache-dir "numpy<2" \
+  && ./venv/bin/pip install --no-cache-dir -e . \
   && ./venv/bin/pip cache purge
 
 FROM python:3.11.11-slim-bullseye
+
+# Set environment variables to disable CUDA
+ENV CUDA_VISIBLE_DEVICES=""
+ENV NO_CUDA=1
+ENV FORCE_CPU=1
 
 RUN addgroup --system --gid 1032 libretranslate && adduser --system --uid 1032 libretranslate && mkdir -p /home/libretranslate/.local && chown -R libretranslate:libretranslate /home/libretranslate/.local
 USER libretranslate
