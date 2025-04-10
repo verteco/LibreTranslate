@@ -26,7 +26,7 @@ services:
       - key: LT_SKIP_INSTALL_MODELS
         value: "true"
       - key: LT_LOAD_ONLY
-        value: "en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl,mt"
+        value: "en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl"
       - key: LT_MEMORY_REDUCTION
         value: "true"
       - key: LT_HOST

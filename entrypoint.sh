@@ -15,8 +15,8 @@ echo "Using port: $PORT"
 mkdir -p $HOME/.local/share/argos-translate/packages
 echo "Created model directory at $HOME/.local/share/argos-translate/packages"
 
-# All EU languages + English
-EU_LANGUAGES="en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl,mt"
+# All EU languages + English (excluding unavailable languages like Maltese)
+EU_LANGUAGES="en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl"
 echo "Loading all EU languages: $EU_LANGUAGES"
 
 # Print environment variables
