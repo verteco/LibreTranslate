@@ -6,8 +6,8 @@ ENV NO_CUDA=1
 ENV FORCE_CPU=1
 ENV LT_SKIP_INSTALL_MODELS=true
 ENV PYTHONUNBUFFERED=1
-# Add core EU languages only (most common and reliable)
-ENV LT_LOAD_ONLY="en,de,fr,it,es"
+# EU languages + English
+ENV LT_LOAD_ONLY="en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl,mt"
 
 WORKDIR /app
 
@@ -43,8 +43,8 @@ ENV LT_SKIP_INSTALL_MODELS=true
 ENV PORT=5000
 ENV PYTHONUNBUFFERED=1
 ENV LT_HOST=0.0.0.0
-# Add core EU languages only (most common and reliable)
-ENV LT_LOAD_ONLY="en,de,fr,it,es"
+# EU languages + English
+ENV LT_LOAD_ONLY="en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl,mt"
 
 # Install additional runtime dependencies
 RUN apt-get update -qq \
@@ -95,7 +95,7 @@ RUN /app/venv/bin/python -c "print('Python works!')"
 
 # Add a dedicated command instead of relying on the entrypoint script
 # This explicitly adds the --load-only flag to limit languages
-CMD ["./venv/bin/libretranslate", "--host", "0.0.0.0", "--port", "5000", "--load-only", "en,de,fr,it,es"]
+CMD ["./venv/bin/libretranslate", "--host", "0.0.0.0", "--port", "5000", "--load-only", "en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,ga,lv,lt,et,sl,mt"]
 
 EXPOSE $PORT
 
