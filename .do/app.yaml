@@ -26,7 +26,7 @@ services:
       - key: LT_SKIP_INSTALL_MODELS
         value: "true"
       - key: LT_LOAD_ONLY
-        value: "en"
+        value: "en,de,fr,it,es,pl,ro,nl,el,hu,pt,sv,cs,fi,da,sk,bg,hr,ga,lv,lt,et,sl"
       - key: LT_MEMORY_REDUCTION
         value: "true"
       - key: LT_HOST
@@ -35,3 +35,10 @@ services:
         value: "1"
       - key: HEALTH_CHECK_PATH
         value: "/languages"
+    health_check:
+      http_path: /languages
+      initial_delay_seconds: 30
+      period_seconds: 10
+      timeout_seconds: 5
+      success_threshold: 1
+      failure_threshold: 3
