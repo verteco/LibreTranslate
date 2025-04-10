@@ -1,5 +1,8 @@
 name: libretranslate
 region: fra
+domains:
+  - domain: translate.verteco.app
+    type: PRIMARY
 services:
   - name: libretranslate-app
     github:
@@ -9,8 +12,12 @@ services:
     build_command: ./venv/bin/python scripts/compile_locales.py
     dockerfile_path: docker/Dockerfile.do
     http_port: 5000
+    instance_size_slug: professional-xs
     instance_count: 1
-    instance_size_slug: basic-s
+    autoscaling:
+      min_instances: 1
+      max_instances: 5
+      cpu_threshold: 75
     routes:
       - path: /
     envs:
