@@ -7,5 +7,5 @@ PORT="${PORT:-5000}"
 # Create required directories
 mkdir -p $HOME/.local/share/argos-translate/packages
 
-# Start LibreTranslate with the appropriate port and skip model check
-exec ./venv/bin/libretranslate --host "*" --port "$PORT" --skip-model-check
+# Start LibreTranslate with the appropriate port
+exec ./venv/bin/libretranslate --host "*" --port "$PORT"
