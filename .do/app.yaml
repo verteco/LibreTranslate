@@ -23,6 +23,8 @@ services:
     envs:
       - key: LT_API_KEYS
         value: "true"
+      - key: LT_SKIP_INSTALL_MODELS
+        value: "true"
       - key: LT_LOAD_ONLY
         value: "en"
       - key: LT_MEMORY_REDUCTION
