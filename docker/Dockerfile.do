@@ -22,10 +22,14 @@ RUN addgroup --system --gid 1032 libretranslate && \
     mkdir -p /home/libretranslate/.local/share/argos-translate/packages && \
     chown -R libretranslate:libretranslate /home/libretranslate/.local
 
-# Copy application files (but don't copy the scripts directory with install_models.py)
+# Copy application files (with special handling for scripts directory)
 COPY --chown=libretranslate:libretranslate libretranslate /app/libretranslate
 COPY --chown=libretranslate:libretranslate *.py pyproject.toml babel.cfg VERSION /app/
 COPY --chown=libretranslate:libretranslate entrypoint.sh /app/
+
+# Create and set up scripts directory - IMPORTANT: We'll use our dummy install_models.py
+RUN mkdir -p /app/scripts
+COPY --chown=libretranslate:libretranslate scripts/install_models.py /app/scripts/
 
 # Set up virtual environment
 RUN python -m venv venv && \

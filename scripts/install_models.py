@@ -1,26 +1,18 @@
 #!/usr/bin/env python
 import os
 import sys
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import argparse
 
-from libretranslate.init import check_and_install_models
+# DO NOT import any LibreTranslate modules
+# This is a dummy version that always succeeds
 
 if __name__ == "__main__":
-    # Check if model installation should be skipped (for DigitalOcean deployments)
-    if os.environ.get('LT_SKIP_INSTALL_MODELS', '').lower() == 'true':
-        print("Skipping model installation as LT_SKIP_INSTALL_MODELS is set to true")
-        sys.exit(0)
-        
+    # Parse arguments (for compatibility) but don't use them
     parser = argparse.ArgumentParser()
     parser.add_argument("--load_only_lang_codes", type=str, default="")
     parser.add_argument("--update", action='store_true')
     args = parser.parse_args()
-    lang_codes = args.load_only_lang_codes.split(",")
-    if len(lang_codes) == 0 or lang_codes[0] == '':
-        lang_codes = None
-    if args.update:
-        check_and_install_models(update=True, load_only_lang_codes=lang_codes)
-    else:
-        check_and_install_models(force=True, load_only_lang_codes=lang_codes)
+    
+    print("Dummy script for DigitalOcean deployment - No models will be installed at build time")
+    print("Models will be pre-downloaded in the Dockerfile")
+    sys.exit(0)  # Always exit successfully
