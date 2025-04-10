@@ -10,7 +10,7 @@ services:
       deploy_on_push: true
       repo: verteco/LibreTranslate
     build_command: ./venv/bin/python scripts/compile_locales.py
-    dockerfile_path: docker/Dockerfile.do
+    dockerfile_path: Dockerfile
     http_port: 5000
     instance_size_slug: professional-xs
     instance_count: 1
@@ -29,3 +29,9 @@ services:
         value: "en"
       - key: LT_MEMORY_REDUCTION
         value: "true"
+      - key: LT_HOST
+        value: "0.0.0.0"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: HEALTH_CHECK_PATH
+        value: "/languages"
