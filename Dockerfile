@@ -7,7 +7,7 @@ ENV FORCE_CPU=1
 ENV LT_SKIP_INSTALL_MODELS=true
 ENV PYTHONUNBUFFERED=1
 # Core languages only for faster startup
-ENV LT_LOAD_ONLY="en,de,fr,it,es"
+ENV LT_LOAD_ONLY="en,de,fr,it,es,cs,sk,pl,hu"
 
 WORKDIR /app
 
