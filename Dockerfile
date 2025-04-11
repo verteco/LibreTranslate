@@ -44,7 +44,7 @@ ENV PORT=5000
 ENV PYTHONUNBUFFERED=1
 ENV LT_HOST=0.0.0.0
 # Core languages only for faster startup
-ENV LT_LOAD_ONLY="en,de,fr,it,es"
+ENV LT_LOAD_ONLY="en,de,fr,it,es,cs,sk,pl,hu"
 
 # Install additional runtime dependencies
 RUN apt-get update -qq \
